@@ -513,7 +513,7 @@ def poll_once(state: dict) -> int:
                 state.setdefault("processed", []).append(uid_int)
                 continue
 
-            subject = decode_str(msg.get("Subject", ""))
+            subject = decode_str(msg.get("Subject", "")).strip()
 
             # 必须以 BG 开头（不区分大小写）
             if not subject.lower().startswith(BG_PREFIX):
