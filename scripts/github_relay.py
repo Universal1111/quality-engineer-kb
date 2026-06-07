@@ -137,10 +137,12 @@ def get_system_status() -> str:
         try:
             conn = sqlite3.connect(DRAGON_DB)
             cur = conn.cursor()
-            cur.execute("SELECT COUNT(*) FROM applications")
+            cur.execute("SELECT COUNT(*) FROM sent")
             total = cur.fetchone()[0]
+            cur.execute("SELECT COUNT(*) FROM drafts WHERE status='ready'")
+            ready = cur.fetchone()[0]
             conn.close()
-            job_info = f"总投递{total}家"
+            job_info = f"已投递{total}家 | 待投递{ready}份"
         except Exception as e:
             job_info = str(e)
 
